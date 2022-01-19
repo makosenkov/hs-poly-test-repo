@@ -19,14 +19,14 @@ digs x = x `mod` 10 : digs (x `div` 10)
 
 -- Дан список чисел. Вернуть самую часто встречающуюся *цифру* в этих числах (если таковых несколько -- вернуть любую)
 mostFreq :: [Int] -> Int
-mostFreq numbers = last $ last $ sortBy (compare `on` length) $ group $ sort $ concat (map digs numbers)   
+mostFreq numbers = last $ maximumBy (compare `on` length) $ group $ sort $ concatMap digs numbers
 
 -- Дан список lst. Вернуть список элементов из lst без повторений, порядок может быть произвольным.
 uniq :: (Eq a) => [a] -> [a]
 uniq [] = []
 uniq lst
-    | elem (head lst) (tail lst) = uniq $ tail lst
-    | otherwise = (head lst : uniq (tail lst))
+    | head lst `elem` tail lst = uniq $ tail lst
+    | otherwise = head lst : uniq (tail lst)
 
 -- Функция grokBy принимает на вход список Lst и функцию F и каждому возможному
 -- значению результата применения F к элементам Lst ставит в соответствие список элементов Lst,
