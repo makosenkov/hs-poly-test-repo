@@ -4,7 +4,9 @@ import Util(notImplementedYet)
 
 -- Реализуйте левую свёртку
 myFoldl :: (b -> a -> b) -> b -> [a] -> b
-myFoldl = notImplementedYet
+myFoldl f acc (h:t)
+    | null (h:t) = acc
+    | otherwise = myFoldl f (f acc h) t
 
 -- Реализуйте правую свёртку
 myFoldr :: (a -> b -> b) -> b -> [a] -> b

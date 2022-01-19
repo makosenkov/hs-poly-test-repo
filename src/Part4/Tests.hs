@@ -66,7 +66,7 @@ prop_applicative =
 unit_monad =
     do
         return 1 @?= (REmpty :< 1)
-        (do { x <- REmpty :< 1 :< 2; y <- REmpty :< 3 :< 4; return (x + y) }) @?=
-            (REmpty :< 3 :< 4 :< 6 :< 8)
+        (do { x <- REmpty :< 1 :< 2; y <- REmpty :< 3 :< 4; return (x * y) }) @?=
+            (REmpty :< 3 :< 4 :< 6 :< 8) -- исправлено
         (do { x <- REmpty :< 1 :< 2; y <- REmpty; return (x + y) }) @?=
             (REmpty)

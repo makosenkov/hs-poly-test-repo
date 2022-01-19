@@ -1,8 +1,6 @@
 module Part4.Tasks where
 
 import Util(notImplementedYet)
-import Data.Bool (Bool(True, False))
-import Control.Monad (Functor(fmap))
 
 -- Перевёрнутый связный список -- хранит ссылку не на последующию, а на предыдущую ячейку
 data ReverseList a = REmpty | (ReverseList a) :< a
@@ -51,9 +49,16 @@ instance Semigroup (ReverseList a) where
     (<>) lst1 (lst2Init :< lst2Last) = lst1 <> lst2Init :< lst2Last
 instance Monoid (ReverseList a) where
     mempty = REmpty
-    mappend lst1 lst2 = lst1 <> lst2
+    mappend = (<>)
+    mconcat = foldr mappend mempty
 instance Functor ReverseList where
     fmap f REmpty = REmpty
     fmap f (init :< last) = fmap f init :< f last
 instance Applicative ReverseList where
+    pure a = REmpty :< a
+    (<*>) _ REmpty = REmpty
+    (<*>) REmpty lst = REmpty
+    (<*>) (init1 :< last1) lst2 = (init1 <*> lst2) <> fmap last1 lst2
 instance Monad ReverseList where
+    (>>=) REmpty _ = REmpty
+    (>>=) (init :< last) f = (init >>= f) <> f last
