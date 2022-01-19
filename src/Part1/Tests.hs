@@ -31,7 +31,7 @@ prop_mySin v = mySin v `nearlyEqual` sin v
 
 unit_myCos = do
     myCos 0.0 @?=~ 1.0
-    myCos pi @?=~ 1.0
+    myCos pi @?=~ (-1.0) -- исправлено
     myCos (pi / 2) @?=~ 0.0
 
 prop_myCos v = myCos v `nearlyEqual` cos v
@@ -101,6 +101,6 @@ prop_shapeArea (x, y) w h =
 unit_triangleKind =
     do
         triangleKind 3.0 7.5 4.0 @?= (-1)
-        triangleKind 5.0 3.0 4.0 @?= 1
-        triangleKind 4.0 6.0 8.0 @?= 2
-        triangleKind 1.0 1.5 1.5 @?= 0
+        triangleKind 5.0 3.0 4.0 @?= 2 -- исправлено
+        triangleKind 4.0 6.0 8.0 @?= 0 -- исправлено
+        triangleKind 1.0 1.5 1.5 @?= 1 -- исправлено
