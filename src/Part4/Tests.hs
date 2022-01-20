@@ -46,7 +46,7 @@ unit_applicative =
     do
         (+) <$> empty <*> empty @?= empty
         (*) <$> (REmpty :< 1 :< 2 :< 3) <*> (REmpty :< 2) @?= (REmpty :< 2 :< 4 :< 6)
-        (+) <$> (REmpty :< 1 :< 2) <*> (REmpty :< 3 :< 4) @?= (REmpty :< 3 :< 4 :< 6 :< 8)
+        (*) <$> (REmpty :< 1 :< 2) <*> (REmpty :< 3 :< 4) @?= (REmpty :< 3 :< 4 :< 6 :< 8) -- исправлено
 
 
 prop_applicative =
