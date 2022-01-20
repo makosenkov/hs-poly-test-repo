@@ -32,4 +32,6 @@ uniq lst
 -- значению результата применения F к элементам Lst ставит в соответствие список элементов Lst,
 -- приводящих к этому результату. Результат следует представить в виде списка пар.
 grokBy :: (Eq k) => (a -> k) -> [a] -> [(k, [a])]
-grokBy f l = notImplementedYet
+grokBy f l = map mapPairList (groupBy (\x y -> snd x == snd y ) (zip l (map f l)))
+    where 
+        mapPairList lst = (snd (head lst), map fst lst)

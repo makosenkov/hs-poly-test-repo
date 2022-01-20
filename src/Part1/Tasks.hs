@@ -1,6 +1,7 @@
 module Part1.Tasks where
 
 import Util(notImplementedYet)
+import Data.List
 
 factorial :: Double -> Double
 factorial 0 = 1
@@ -104,8 +105,13 @@ shapeArea points
 --  -1, если это не треугольник
 triangleKind :: Double -> Double -> Double -> Integer
 triangleKind a b c
-    | (a + b) < c || (a + c) < b || (c + b) < a = -1
-    | a**2 == b**2 + c**2 || b**2 == a**2 + c**2 || c**2 == a**2 + b**2 = 2
-    | a**2 < b**2 + c**2 && b**2 < a**2 + c**2 && c**2 < a**2 + b**2 = 1
-    | a**2 > b**2 + c**2 || b**2 > a**2 + c**2 || c**2 > a**2 + b**2 = 0
+    | head sorted > sum (tail sorted) = -1
+    | squareOfLongest sorted == sumOfOthersSquares sorted = 2
+    | squareOfLongest sorted < sumOfOthersSquares sorted = 1
+    | squareOfLongest sorted > sumOfOthersSquares sorted = 0
     | otherwise = -1
+        where 
+            sorted = reverse $ sort [a, b, c]
+            squareOfLongest sorted = (head sorted) ** 2
+            sumOfOthersSquares lst = sum $ map (\x -> x**2) (tail lst)
+
